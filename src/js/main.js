@@ -15,7 +15,7 @@ class Game {
       y: Math.floor(Math.random() * 15 + 1) * this.box
     };
 
-    setInterval(() => this.startGame(), 100);
+    const gameLoop = setInterval(() => this.startGame(), 100);
   }
 
   createBackground() {
@@ -44,6 +44,15 @@ class Game {
       this.snake[0].y = 0;
     } else if (this.snake[0].y < 0 && this.direction === 'up') {
       this.snake[0].y = 16 * this.box;
+    }
+
+    for (let i = 1; i < this.snake.length; i++) {
+      if (this.snake[0].x === this.snake[i].x &&
+        this.snake[0].y === this.snake[i].y) {
+          clearInterval(gameLoop);
+          alert('Game Over!');
+          return;
+        }
     }
 
     this.createBackground();
