@@ -39,11 +39,11 @@ class Game {
     if (this.snake[0].x > 15 * this.box && this.direction === 'right') {
       this.snake[0].x = 0;
     } else if (this.snake[0].x < 0 && this.direction === 'left') {
-      this.snake[0].x = 16 * box;
+      this.snake[0].x = 16 * this.box;
     } else if (this.snake[0].y > 15 * this.box && this.direction === 'down') {
       this.snake[0].y = 0;
     } else if (this.snake[0].y < 0 && this.direction === 'up') {
-      this.snake[0].y = 16 * box;
+      this.snake[0].y = 16 * this.box;
     }
 
     this.createBackground();
@@ -70,7 +70,12 @@ class Game {
         break;
     }
 
-    this.snake.pop();
+    if (snakeX != this.food.x || snakeY != this.food.y) {
+      this.snake.pop();
+    } else {
+      this.food.x = Math.floor(Math.random() * 15 + 1) * this.box;
+      this.food.y = Math.floor(Math.random() * 15 + 1) * this.box;
+    }
 
     this.snake.unshift({
       x: snakeX,
