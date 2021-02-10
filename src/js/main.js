@@ -3,11 +3,18 @@ class Game {
     this.canvas = document.querySelector('.snake');
     this.context = this.canvas.getContext('2d');
     this.box = 32;
+    this.direction = 'right';
+
     this.snake = [{
       x: 8 * this.box,
       y: 8 * this.box
     }];
-    this.direction = 'right';
+
+    this.food = {
+      x: Math.floor(Math.random() * 15 + 1) * this.box,
+      y: Math.floor(Math.random() * 15 + 1) * this.box
+    };
+
     setInterval(() => this.startGame(), 100);
   }
 
@@ -23,6 +30,11 @@ class Game {
     });
   }
 
+  drawFood() {
+    this.context.fillStyle = 'red';
+    this.context.fillRect(this.food.x, this.food.y, this.box, this.box)
+  }
+
   startGame() {
     if (this.snake[0].x > 15 * this.box && this.direction === 'right') {
       this.snake[0].x = 0;
@@ -36,6 +48,7 @@ class Game {
 
     this.createBackground();
     this.createSnake();
+    this.drawFood();
 
     let snakeX = this.snake[0].x;
     let snakeY = this.snake[0].y;
